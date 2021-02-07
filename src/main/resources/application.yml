@@ -1,0 +1,9 @@
+server:
+  port: 8808
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: sun-bright-momemer
+  datasource:
