@@ -16,22 +16,22 @@ public class WorkDayUtils {
     /**
      * 获取日期之间的天数
      */
-    public int getDaysBetween(Calendar d1, Calendar d2) {
+    public int getDaysBetween(Calendar startCalendar, Calendar endCalendar) {
         // swap dates so that d1 is start and d2 is end
-        if (d1.after(d2)) {
-            Calendar swap = d1;
-            d1 = d2;
-            d2 = swap;
+        if (startCalendar.after(endCalendar)) {
+            Calendar swap = startCalendar;
+            startCalendar = endCalendar;
+            endCalendar = swap;
         }
-        int days = d2.get(Calendar.DAY_OF_YEAR)
-                - d1.get(Calendar.DAY_OF_YEAR);
-        int y2 = d2.get(Calendar.YEAR);
-        if (d1.get(Calendar.YEAR) != y2) {
-            d1 = (Calendar) d1.clone();
+        int days = endCalendar.get(Calendar.DAY_OF_YEAR)
+                - startCalendar.get(Calendar.DAY_OF_YEAR);
+        int year = endCalendar.get(Calendar.YEAR);
+        if (startCalendar.get(Calendar.YEAR) != year) {
+            startCalendar = (Calendar) startCalendar.clone();
             do {
-                days += d1.getActualMaximum(Calendar.DAY_OF_YEAR);
-                d1.add(Calendar.YEAR, 1);
-            } while (d1.get(Calendar.YEAR) != y2);
+                days += startCalendar.getActualMaximum(Calendar.DAY_OF_YEAR);
+                startCalendar.add(Calendar.YEAR, 1);
+            } while (startCalendar.get(Calendar.YEAR) != year);
         }
         return days;
     }
@@ -39,22 +39,20 @@ public class WorkDayUtils {
     /**
      * 获取工作日
      */
-    public int getWorkingDay(Calendar d1, Calendar d2) {
+    public int getWorkingDay(Calendar startCalendar, Calendar endCalendar) {
         int result;
-        if (d1.after(d2)) {
-            Calendar swap = d1;
-            d1 = d2;
-            d2 = swap;
+        if (startCalendar.after(endCalendar)) {
+            Calendar swap = startCalendar;
+            startCalendar = endCalendar;
+            endCalendar = swap;
         }
         // 开始日期的日期偏移量
         int chargeStartDate = 0;
         // 结束日期的日期偏移量
         int chargeEndDate = 0;
         // 日期不在同一个日期内
-        int startTmp;
-        int endTmp;
-        startTmp = 7 - d1.get(Calendar.DAY_OF_WEEK);
-        endTmp = 7 - d2.get(Calendar.DAY_OF_WEEK);
+        int startTmp = 7 - startCalendar.get(Calendar.DAY_OF_WEEK);
+        int endTmp = 7 - endCalendar.get(Calendar.DAY_OF_WEEK);
         // 开始日期为星期六和星期日时偏移量为0
         if (startTmp != 0 && startTmp != Calendar.DAY_OF_YEAR) {
             chargeStartDate = startTmp - 1;
@@ -63,8 +61,8 @@ public class WorkDayUtils {
         if (endTmp != 0 && endTmp != Calendar.DAY_OF_YEAR) {
             chargeEndDate = endTmp - 1;
         }
-        result = (getDaysBetween(this.getNextMonday(d1),
-                this.getNextMonday(d2)) / 7) * 5 + chargeStartDate - chargeEndDate;
+        result = (getDaysBetween(this.getNextMonday(startCalendar),
+                this.getNextMonday(endCalendar)) / 7) * 5 + chargeStartDate - chargeEndDate;
         return result;
     }
 
@@ -92,8 +90,8 @@ public class WorkDayUtils {
     /**
      * 获取休息日
      */
-    public int getHolidays(Calendar d1, Calendar d2) {
-        return this.getDaysBetween(d1, d2) - this.getWorkingDay(d1, d2);
+    public int getHolidays(Calendar startCalendar, Calendar endCalendar) {
+        return this.getDaysBetween(startCalendar, endCalendar) - this.getWorkingDay(startCalendar, endCalendar);
     }
 
 }

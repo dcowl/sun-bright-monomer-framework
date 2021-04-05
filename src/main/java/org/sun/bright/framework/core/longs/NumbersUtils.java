@@ -26,23 +26,23 @@ public class NumbersUtils extends org.apache.commons.lang3.math.NumberUtils {
     /**
      * 提供精确的减法运算。
      *
-     * @param v1 被减数
-     * @param v2 减数
+     * @param minuend 被减数
+     * @param subtrahend 减数
      * @return 两个参数的差
      */
-    public static double subtract(double v1, double v2) {
-        return BigDecimal.valueOf(v1).subtract(BigDecimal.valueOf(v2)).doubleValue();
+    public static double subtract(double minuend, double subtrahend) {
+        return BigDecimal.valueOf(minuend).subtract(BigDecimal.valueOf(subtrahend)).doubleValue();
     }
 
     /**
      * 提供精确的加法运算。
      *
-     * @param v1 被加数
-     * @param v2 加数
+     * @param summand 被加数
+     * @param addend 加数
      * @return 两个参数的和
      */
-    public static double add(double v1, double v2) {
-        return BigDecimal.valueOf(v1).add(BigDecimal.valueOf(v2)).doubleValue();
+    public static double add(double summand, double addend) {
+        return BigDecimal.valueOf(summand).add(BigDecimal.valueOf(addend)).doubleValue();
     }
 
     /**

@@ -1,6 +1,6 @@
 package org.sun.bright.framework.codec;
 
-import org.sun.bright.exception.codec.CodecException;
+import org.sun.bright.handler.exception.codec.CodecException;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -23,9 +23,12 @@ public class AesBase64Utils {
     private AesBase64Utils() {
     }
 
+    /**
+     * 指定AES{@value}
+     */
     private static final String KEY_ALGORITHM = "AES";
 
-    /*** 默认的加密算法 */
+    /*** 默认的加密算法{@value} */
     private static final String DEFAULT_CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
 
     /**

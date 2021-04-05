@@ -1,7 +1,7 @@
 package org.sun.bright.framework.codec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.sun.bright.exception.codec.CodecException;
+import org.sun.bright.handler.exception.codec.CodecException;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
@@ -27,10 +27,19 @@ public class RsaUtils {
     private RsaUtils() {
     }
 
+    /**
+     * 加密方式 {@value}
+     */
     private static final String RSA_ALGORITHM = "RSA/None/OAEPWITHSHA-256ANDMGF1PADDING";
 
+    /**
+     * 加密错误描述 {@value}
+     */
     private static final String ERROR_INFO = "]时遇到异常";
 
+    /**
+     * 生产key
+     */
     public static Map<String, String> createKeys(int keySize) {
         // 为RSA算法创建一个KeyPairGenerator对象
         try {
@@ -97,7 +106,6 @@ public class RsaUtils {
     /**
      * 私钥解密
      */
-
     public static String privateDecrypt(String data, RSAPrivateKey privateKey) {
         try {
             Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);

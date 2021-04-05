@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 
+import javax.validation.constraints.NotNull;
 import java.lang.management.ManagementFactory;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,32 +15,24 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @author <a href="mailto:2867665887@qq.com">SunlightBright</a>
  * @version 1.0
+ * @since 2021/2/1
  */
 public class DateUtils {
 
     private DateUtils() {
     }
 
-    /**
-     * <pre>
-     *     private static final String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm",
-     *     "yyyy-MM-dd HH", "yyyy-MM", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM/dd HH",
-     *     "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM.dd HH", "yyyy.MM",
-     *     "yyyy年MM月dd日", "yyyy年MM月dd日 HH时mm分ss秒", "yyyy年MM月dd日 HH时mm分", "yyyy年MM月dd日 HH时", "yyyy年MM月",
-     *     "yyyy"};
-     * </pre>
-     */
-    public static final String YYYY_MM_DD = "yyyy-MM-dd";
-
-    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
-
-    public static final String YYYY_YEAR_MM_MONTH_DD_DAY_HH_HOU_MM_M_SS_S = "yyyy年MM月dd日 HH时mm分ss秒";
+    private static final String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd HH", "yyyy-MM", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM/dd HH",
+            "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM.dd HH", "yyyy.MM",
+            "yyyy年MM月dd日", "yyyy年MM月dd日 HH时mm分ss秒", "yyyy年MM月dd日 HH时mm分", "yyyy年MM月dd日 HH时", "yyyy年MM月",
+            "yyyy"};
 
     /**
      * 得到日期字符串 ，转换格式（yyyy-MM-dd）
      */
     public static String formatDate(Date date) {
-        return formatDate(date, YYYY_MM_DD);
+        return formatDate(date, parsePatterns[0]);
     }
 
     /**
@@ -52,14 +45,12 @@ public class DateUtils {
     /**
      * 得到日期字符串 默认格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
      */
-    public static String formatDate(Date date, String pattern) {
+    public static String formatDate(@NotNull(message = "时间参数不能为空！") Date date, String pattern) {
         AtomicReference<String> formatDate = new AtomicReference<>("");
-        if (date != null) {
-            if (StringUtils.isBlank(pattern)) {
-                pattern = YYYY_MM_DD;
-            }
-            formatDate.set(FastDateFormat.getInstance(pattern).format(date));
+        if (StringUtils.isBlank(pattern)) {
+            pattern = parsePatterns[0];
         }
+        formatDate.set(FastDateFormat.getInstance(pattern).format(date));
         return formatDate.get();
     }
 
@@ -67,14 +58,14 @@ public class DateUtils {
      * 得到日期时间字符串，转换格式（yyyy-MM-dd HH:mm:ss）
      */
     public static String formatDateTime(Date date) {
-        return formatDate(date, YYYY_MM_DD_HH_MM_SS);
+        return formatDate(date, parsePatterns[1]);
     }
 
     /**
      * 得到当前日期字符串 格式（yyyy-MM-dd）
      */
-    public static String getDate() {
-        return getDate(YYYY_MM_DD);
+    public static String getCurDate() {
+        return getDate(parsePatterns[0]);
     }
 
     /**
@@ -110,7 +101,7 @@ public class DateUtils {
      * 得到当前日期和时间字符串 格式（yyyy-MM-dd HH:mm:ss）
      */
     public static String getDateTime() {
-        return formatDate(new Date(), YYYY_MM_DD_HH_MM_SS);
+        return formatDate(new Date(), parsePatterns[1]);
     }
 
     /**

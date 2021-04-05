@@ -12,14 +12,23 @@ public final class Base64 {
     }
 
     private static final int BASE_LENGTH = 128;
+
     private static final int LOOK_UP_LENGTH = 64;
+
     private static final int TWENTY_FOUR_BIT_GROUP = 24;
+
     private static final int EIGHT_BIT = 8;
+
     private static final int SIX_TEEN_BIT = 16;
+
     private static final int FOUR_BYTE = 4;
+
     private static final int SIGN = -128;
+
     private static final char PAD = '=';
+
     private static final byte[] BASE_64_ALPHABET = new byte[BASE_LENGTH];
+
     private static final char[] lookUpBase64Alphabet = new char[LOOK_UP_LENGTH];
 
     static {
@@ -80,22 +89,22 @@ public final class Base64 {
         int numberTriplets = lengthDataBits / TWENTY_FOUR_BIT_GROUP;
         int numberQuartet = fewerThan24bits != 0 ? numberTriplets + 1 : numberTriplets;
         char[] encodedData = new char[numberQuartet * 4];
-        byte k = 0, l = 0, b1 = 0, b2 = 0, b3 = 0;
+        byte k;
+        byte l;
+        byte b1;
+        byte b2;
+        byte b3;
         int encodedIndex = 0;
         int dataIndex = 0;
-
         for (int i = 0; i < numberTriplets; i++) {
             b1 = binaryData[dataIndex++];
             b2 = binaryData[dataIndex++];
             b3 = binaryData[dataIndex++];
-
             l = (byte) (b2 & 0x0f);
             k = (byte) (b1 & 0x03);
-
             byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
             byte val2 = ((b2 & SIGN) == 0) ? (byte) (b2 >> 4) : (byte) ((b2) >> 4 ^ 0xf0);
             byte val3 = ((b3 & SIGN) == 0) ? (byte) (b3 >> 6) : (byte) ((b3) >> 6 ^ 0xfc);
-
             encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
             encodedData[encodedIndex++] = lookUpBase64Alphabet[val2 | (k << 4)];
             encodedData[encodedIndex++] = lookUpBase64Alphabet[(l << 2) | val3];
@@ -116,10 +125,8 @@ public final class Base64 {
             b2 = binaryData[dataIndex + 1];
             l = (byte) (b2 & 0x0f);
             k = (byte) (b1 & 0x03);
-
             byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2) : (byte) ((b1) >> 2 ^ 0xc0);
             byte val2 = ((b2 & SIGN) == 0) ? (byte) (b2 >> 4) : (byte) ((b2) >> 4 ^ 0xf0);
-
             encodedData[encodedIndex++] = lookUpBase64Alphabet[val1];
             encodedData[encodedIndex++] = lookUpBase64Alphabet[val2 | (k << 4)];
             encodedData[encodedIndex++] = lookUpBase64Alphabet[l << 2];

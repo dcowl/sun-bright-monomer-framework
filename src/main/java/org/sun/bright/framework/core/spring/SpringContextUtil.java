@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
  * 由 Spring 提供的注解 <code>@Component</code> 或其 派生注解声明的Bean
  * <p>
  * 方法中 {@link #setApplicationContext(ApplicationContext)} 会抛出异常: {@link org.springframework.beans.BeansException}
+ * 调用方式1：可以通过Spring的依赖注入进行调用{@code SpringContextUtil}所提供的依赖查询方法
+ * 调用方式2：可以直接通过{@code SpringContextUtil}调用依赖查询方法
  *
  * @author <a href="mailto:2867665887@qq.com">ShuNing</a>
  * @see SpringContextHolder

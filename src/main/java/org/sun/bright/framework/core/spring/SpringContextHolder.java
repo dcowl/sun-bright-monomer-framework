@@ -27,13 +27,6 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
     private static ApplicationContext applicationContext = null;
 
     /**
-     * 取得存储在静态变量中的ApplicationContext.
-     */
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
-    /**
      * 实现ApplicationContextAware接口, 注入Context到静态变量中.
      */
     @Override
@@ -41,6 +34,12 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
         applicationContext = context;
     }
 
+    /**
+     * 取得存储在静态变量中的ApplicationContext.
+     */
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
     /**
      * 发布事件
      *

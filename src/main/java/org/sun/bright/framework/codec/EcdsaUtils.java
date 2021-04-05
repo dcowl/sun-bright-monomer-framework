@@ -1,6 +1,6 @@
 package org.sun.bright.framework.codec;
 
-import org.sun.bright.exception.codec.CodecException;
+import org.sun.bright.handler.exception.codec.CodecException;
 
 import java.security.*;
 import java.security.spec.ECGenParameterSpec;
@@ -21,10 +21,19 @@ public class EcdsaUtils {
     private EcdsaUtils() {
     }
 
+    /**
+     * 加密方式{@value}
+     */
     private static final String ALGORITHM = "EC";
 
+    /**
+     * 加密描述{@value}
+     */
     private static final String CODEC_ERROR = "加密错误";
 
+    /**
+     * 加密算法
+     */
     private static final String SIGN_ALGORITHM = "SHA256withECDSA";
 
     public static void main(String[] args) {
@@ -166,6 +175,6 @@ public class EcdsaUtils {
             out[j++] = toDigits[(0xF0 & data[i]) >>> 4];
             out[j++] = toDigits[0x0F & data[i]];
         }
-        return new String(out);
+        return String.valueOf(out);
     }
 }

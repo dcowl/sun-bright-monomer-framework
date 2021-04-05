@@ -28,7 +28,7 @@ public class CharsetsUtils extends StringUtils {
     /**
      * 转换为字节数组
      *
-     * @param str String
+     * @param str String obj
      * @return byte[]
      */
     public static byte[] getBytes(String str) {

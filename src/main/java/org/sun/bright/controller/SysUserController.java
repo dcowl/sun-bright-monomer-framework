@@ -10,6 +10,8 @@ import org.sun.bright.framework.result.Result;
  * 参数校验常量类
  *
  * @author <a href="mailto:2867665887@qq.com">SunBright</a>
+ * @version 1.0
+ * @since 2021/03/01
  */
 @RestController
 @RequestMapping(value = "/api/v1/users")
